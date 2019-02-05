@@ -1,4 +1,5 @@
 import pygame
+import combat as combat
 
 pygame.init()
 gameDisplay = pygame.display.set_mode((800,600))
@@ -10,11 +11,11 @@ red = (255,0,0)
 yellow = (255, 255, 0)
 #main caracter equipment
 #             name,  health, weapon_attack, health_potions, mana_potions, Spells 
-caracter_info["stefan",  100,  10 , 3 , 2 , [heal, fireball, arcane missles]]
+caracter_info = ["stefan",  100,  100 , 3 , 2 , ["heal", "fireball", "arcaneMissles"]]
 
 
 # initial enemy location for developmennt
-#             x     y  id     name  lvl health  attak 
+#             x     y  id     name  lvl health  attack (later immage location)
 enemyList = [[[60, 500], 1 , "dragon" , 2  , 200    , 20] ]
 enemy_available = []
 
@@ -81,7 +82,7 @@ def main():
           y_cord = y_cord - 5
           movement(x_cord, y_cord)
     if (check_if_hit(x_cord,y_cord)):
-      combat(1)
+      combat.combat(1, enemyList, caracter_info, gameDisplay) 
       enemyList[0][0][0] = 0
       enemyList[0][0][1] = 0
 
@@ -91,36 +92,6 @@ def movement(X_cord, y_cord):
   pygame.draw.rect(gameDisplay, red, [ X_cord, y_cord , 30, 30])
   pygame.draw.rect(gameDisplay, red, [enemyList[0][0][0], enemyList[0][0][1] , 20, 20])
   pygame.display.update()
-
-def combat(enemy_id): 
-  global enemyList
-  monster_health = 0
-  lvl = 0
-  monster_name = "a"
-  monster_attack = 0 
-  for i in enemyList:
-    if i[1] == enemy_id:
-      monster_name = i[2]
-      lvl = i[3]
-      monster_health = i[4]
-      monster_attack = i[5]
-  gameDisplay.fill(white)
-  pygame.display.update()
-  MonsterHealth = 100 
-  PlayerHealth = 100
-  winner = False
-  print(monster_name)
-  while (winner == False):
-    for event in pygame.event.get():
-      if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_s:
-          monsterHealth -= weaponDamage
-          if monsterHealth <= 0:
-            winner = True
-        if event.key == pygame.K_p:
-          player_health += 50
-        if event.key == pygame.K_q:
-          winner = True
 
 def check_if_hit(x_cord, y_cord):
   global enemyList
