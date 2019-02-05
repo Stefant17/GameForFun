@@ -30,10 +30,17 @@ def combat(enemy_id, enemyList, caracter_info, gameDisplay):
           player_health += 50
         if event.key == pygame.K_q:
           winner = True
+      button(150,500,100,30)
 
 def display_enemy(gameDisplay):
   gameDisplay.fill(white)
   pygame.draw.rect(gameDisplay, red, [100, 50 , 500 , 400])
   pygame.draw.rect(gameDisplay,red ,[150, 500, 100, 30])
-  
   pygame.display.update()
+
+def button( x, y , width, height):
+  cur = pygame.mouse.get_pos()
+  click = pygame.mouse.get_pressed()
+  if x + width > cur[0] > x and y + height > cur[1] > y:
+    if click[0] == 1:
+      print("yes")
