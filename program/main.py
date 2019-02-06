@@ -99,7 +99,7 @@ def check_if_hit(x_cord, y_cord):
     if x_cord > i[0][0] and x_cord < i[0][0]+35 or x_cord + 30 > i[0][0] and x_cord + 30 < i[0][0] + 35:
       if y_cord > i[0][1] and y_cord < i[0][1]+ 35 or y_cord+35 > i[0][1] and y_cord + 30 < i[0][1] + 35:
         return True
-
+q
 
 
 

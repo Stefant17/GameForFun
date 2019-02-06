@@ -1,4 +1,5 @@
 import pygame
+import gameover as gameover 
 white = (255,255,255)
 red = (255,0,0)
 
@@ -26,11 +27,14 @@ def combat(enemy_id, enemyList, caracter_info, gameDisplay):
           monster_health -= weaponDamage
           if monster_health <= 0:
             winner = True
-        if event.key == pygame.K_p:
+        elif event.key == pygame.K_p:
           player_health += 50
-        if event.key == pygame.K_q:
+        elif event.key == pygame.K_q:
           winner = True
-      button(150,500,100,30)
+      elif event.type == pygame.MOUSEBUTTONDOWN:
+        button(150,500,100,30)
+    if caracter_info[]:
+      gameover.gameover()
 
 def display_enemy(gameDisplay):
   gameDisplay.fill(white)
