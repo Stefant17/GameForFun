@@ -17,7 +17,8 @@ def combat(enemy_id, enemyList, caracter_info, gameDisplay):
       lvl = i[3]
       monster_health = i[4]
       monster_attack = i[5]
-  display_enemy(gameDisplay)
+      img_location = i[6]
+  display_enemy(gameDisplay, img_location)
   winner = False
   print(monster_name)
   while (winner == False):
@@ -26,20 +27,35 @@ def combat(enemy_id, enemyList, caracter_info, gameDisplay):
         if event.key == pygame.K_s:
           monster_health -= weaponDamage
           if monster_health <= 0:
-            winner = True
+            print('you won!! ')
+            return enemy_id
         elif event.key == pygame.K_p:
           player_health += 50
         elif event.key == pygame.K_q:
-          winner = True
+          return enemy_id
+        elif event.key == pygame.K_a:
+          caracter_info[1] -= 10
+          if caracter_info[1] <= 0:
+            gameover.gameover()
       elif event.type == pygame.MOUSEBUTTONDOWN:
-        button(150,500,100,30)
-    if caracter_info[]:
-      gameover.gameover()
+        if button(150,500,100,30):
+          monster_health = attack(caracter_info, monster_health)
+          if (monster_health <= 0):
+            return enemy_id
+        if button(350, 500, 100, 30):
+          potion(caracter_info[1], 30)
+        if button(550, 500, 100, 30):
+          inventory(caracter_info[6])
 
-def display_enemy(gameDisplay):
+
+def display_enemy(gameDisplay, img_location):
   gameDisplay.fill(white)
-  pygame.draw.rect(gameDisplay, red, [100, 50 , 500 , 400])
+  img = pygame.image.load(img_location)
+  img = pygame.transform.scale(img, (500, 400))
+  gameDisplay.blit(img, (100, 50))
   pygame.draw.rect(gameDisplay,red ,[150, 500, 100, 30])
+  pygame.draw.rect(gameDisplay,red ,[350, 500, 100, 30])
+  pygame.draw.rect(gameDisplay,red ,[550, 500, 100, 30])
   pygame.display.update()
 
 def button( x, y , width, height):
@@ -47,4 +63,13 @@ def button( x, y , width, height):
   click = pygame.mouse.get_pressed()
   if x + width > cur[0] > x and y + height > cur[1] > y:
     if click[0] == 1:
-      print("yes")
+      return True
+
+def attack(caracter_info, monster_health):
+  return monster_health - caracter_info[2]
+
+def potion(caracter_health, potion):
+  return caracter_health + potion
+
+def inventory(inventory): 
+  return 0 #hugmyndin var a[ ýta á takka og svo breytir það vopninu sem þú ert með en er að íhugsa hluti
